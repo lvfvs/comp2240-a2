@@ -11,7 +11,7 @@
 import java.util.concurrent.*;
 public class Bridge {
     private final int BRIDGE_LENGTH = 20; // A farmer takes 20 steps to cross the bridge
-    private final Semaphore bridge = new Semaphore(1); // A semaphore representing the bridge
+    private final Semaphore bridgeLock = new Semaphore(1, true); // A semaphore representing the bridge
     private int neon = 0; // Tracks the number of farmers that have crossed the bridge
 
 

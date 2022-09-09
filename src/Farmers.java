@@ -8,6 +8,9 @@
  *
  */
 public class Farmers implements Runnable {
+    private int steps; // A count of how many steps the farmer has taken
+
+
     public void run() {
 
     }
