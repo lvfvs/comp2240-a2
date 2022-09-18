@@ -8,23 +8,71 @@
  *
  */
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import java.io.File;
 
 public class P1 {
     public static void main(String[] args) {
-        if(args.length != 1) {
-            System.out.println("Error: File not found!");
-            return;
+        try {
+            if(args.length != 1) {
+                System.out.println("Error: File not found!");
+                return;
+            }
+
+            File file = new File(args[0]);
+
+            P1 p1 = new P1();
+            p1.run(file);
         }
 
-        Path path = Paths.get(args[0]);
-
-        P1 p1 = new P1();
-        p1.run(path);
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
-    private void run(Path file) {
+    private void run(File file) throws FileNotFoundException {
+        int[] values = getValues(file);
+        Bridge bridge = new Bridge();
+        ArrayList<Farmer> farmers = spawnFarmers(values[0], values[1], bridge);
 
+        // Generate farmer threads
+        for(Farmer farmer : farmers) {
+            new Thread(farmer).start();
+        }
+
+    }
+
+    private int[] getValues(File file) throws FileNotFoundException {
+        Scanner input = new Scanner(file);
+        String[] values = input.nextLine().split(",\\s");
+        int[] array = new int[2];
+
+        if (values[0].startsWith("N")) {
+            int north = Integer.parseInt(values[0].substring(2));
+            int south = Integer.parseInt(values[1].substring(2));
+            array[0] = north;
+            array[1] = south;
+        }
+
+        return array;
+    }
+
+    private ArrayList<Farmer> spawnFarmers(int north, int south, Bridge bridge) {
+        ArrayList<Farmer> farmers = new ArrayList<>();
+
+        for(int i = 0; i < north; i++) {
+            farmers.add(new Farmer("N_Farmer", "North", bridge));
+        }
+
+        for(int i = 0; i < south; i++) {
+            farmers.add(new Farmer("S_Farmer", "South", bridge));
+        }
+
+        return farmers;
     }
 }
+
