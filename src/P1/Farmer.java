@@ -7,6 +7,9 @@
  *  Student Number: c3188124
  *
  */
+
+package P1;
+
 public class Farmer implements Runnable {
     private String id;
     private int steps; // A count of how many steps the farmer has taken
@@ -20,10 +23,13 @@ public class Farmer implements Runnable {
         this.bridge = bridge;
     }
     @Override public void run() {
-
+        this.bridge.use(this);
     }
 
-    private void destination() {
+    public String getDestination() {
+        return this.destination;
+    }
+    public void setDestination() {
         if(this.home.equals("North")) {
             this.destination = "South";
         }
@@ -31,5 +37,13 @@ public class Farmer implements Runnable {
         else if(this.home.equals("South")) {
             this.destination = "North";
         }
+    }
+
+    public void incrementStep() {
+        this.steps++;
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

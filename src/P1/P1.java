@@ -8,6 +8,8 @@
  *
  */
 
+package P1;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -43,7 +45,6 @@ public class P1 {
         for(Farmer farmer : farmers) {
             new Thread(farmer).start();
         }
-
     }
 
     private int[] getValues(File file) throws FileNotFoundException {
