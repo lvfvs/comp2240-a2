@@ -6,6 +6,7 @@ public class Customer implements Runnable {
     private int iceCreamEatingTime;
     private int leavingTime;
     private boolean isSeated;
+    private int timeSeated;
     private Parlour parlour;
 
     public Customer(String id, int arrivalTime, int iceCreamEatingTime, Parlour parlour) {
@@ -16,9 +17,26 @@ public class Customer implements Runnable {
     }
 
     @Override public void run() {
-        parlourLock.acquire();
-        parlour.
+        isSeated = false;
+        while(!isSeated()) {
+            if(!parlour.isFull()) {
+                parlour.acquireSemaphore();
+                isSeated = parlour.seatCustomer();
+                parlour.releaseSemaphore();
+            }
+
+            setTimeSeated(parlour.getTime());
+
+            while(parlour.getTime() != iceCreamEatingTime + timeSeated) {
+                Thread.sleep(10);
+            }
+
+            parlour.acquireSemaphore();
+            parlour.leaveParlour();
+            parlour.releaseSemaphore();
+        }
     }
+
 
     public String getId() {
         return this.id;
@@ -40,7 +58,15 @@ public class Customer implements Runnable {
         return this.isSeated;
     }
 
-    // Performs a check to see if all customers in the parlour have finished eating their ice cream
+    public int getTimeSeated() {
+        return this.timeSeated;
+    }
+
+    public void setTimeSeated(int newTimeSeated) {
+        this.timeSeated = newTimeSeated;
+    }
+
+    /*// Performs a check to see if all customers in the parlour have finished eating their ice cream
     public boolean checkAllFinished() {
         boolean finished = true;
 
@@ -55,5 +81,5 @@ public class Customer implements Runnable {
         }
 
         return finished;
-    }
+    }*/
 }

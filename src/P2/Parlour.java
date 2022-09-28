@@ -8,38 +8,81 @@ import java.util.concurrent.*;
 
 public class Parlour {
     private final int SEATS = 5;
-    private final Semaphore parlourLock = new Semaphore(SEATS, true);
+    private final Semaphore seat = new Semaphore(SEATS, true);
+    private ArrayList<Customer> customers;
+    private int numberofCustomers = customers.size();
+    private int numberOfSeats = 5;
+    private boolean isFull;
+    private int finishedCustomers = 0;
     private int time;
 
-    public Parlour(int time) {
+    public Parlour() {
         this.time = 0;
     }
-    // Loop and keep track of time.
-    public void run(ArrayList<Customer> customer) {
-        while(time loop) {
-            if(customer.getArrivalTime() == time) {
-                //pop the customer that has same arrival time
-                //start those threads
+
+    public void run(ArrayList<Customer> customers) {
+        while(numberofCustomers != finishedCustomers) {
+            try {
+                while(customers.get(0).getArrivalTime() == time) {
+                    customers.remove(0);
+                    finishedCustomers++;
+                }
+
                 Thread.sleep(1000);
                 time++;
             }
 
+            catch(InterruptedException e){
+                e.printStackTrace();
+                System.exit(1);
+            }
+        }
+    }
+
+    public void acquireSemaphore() {
+        try {
+            seat.acquire();
         }
 
+        catch(InterruptedException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
+
+    public void releaseSemaphore() {
+        seat.release();
+    }
+
+    public int getTime() {
+        return this.time;
+    }
+
 
     // Return true if a Customer was successfully seated
     public boolean seatCustomer() {
-        return true;
+        if(!isFull) {
+            return true;
+        }
+
+        else{
+            return false;
+            }
     }
 
     // Return true if Customer is finished eating their ice cream
-    public boolean isDone() {
-        return true;
+    public int leaveParlour() {
+        return numberOfSeats++;
     }
 
     // Return true if the Parlour has 5 Customers seated
     public boolean isFull() {
-        return true;
+        boolean full = false;
+
+        if(customers.size() >= 5) {
+            full = true;
+        }
+
+        return full;
     }
 }
