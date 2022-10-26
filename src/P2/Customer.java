@@ -28,7 +28,13 @@ public class Customer implements Runnable {
             setTimeSeated(parlour.getTime());
 
             while(parlour.getTime() != iceCreamEatingTime + timeSeated) {
-                Thread.sleep(10);
+                try {
+                    Thread.sleep(10);
+                }
+
+                catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             parlour.acquireSemaphore();
@@ -36,7 +42,6 @@ public class Customer implements Runnable {
             parlour.releaseSemaphore();
         }
     }
-
 
     public String getId() {
         return this.id;

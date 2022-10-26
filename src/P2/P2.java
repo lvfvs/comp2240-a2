@@ -8,27 +8,30 @@ import java.io.FileNotFoundException;
 
 public class P2 {
     public static void main(String[] args) {
-        try {
-            if(args.length != 1) {
-                System.out.println("Error: File not found!");
-                return;
-            }
-
-            File file = new File(args[0]);
-
-            P2 p2 = new P2();
-            p2.run(file);
+        if(args.length != 1) {
+            System.out.println("Error: File not found!");
+            return;
         }
 
-        catch(FileNotFoundException e){
-            e.printStackTrace();
-            System.exit(1);
-        }
+        File file = new File(args[0]);
+
+        P2 p2 = new P2();
+        p2.run(file);
     }
 
-    private void run(File file) throws FileNotFoundException {
+    private void run(File file) {
         Parlour parlour = new Parlour();
-        ArrayList<Customer> customers = generateCustomers(file, parlour);
+
+        ArrayList<Customer> customers;
+
+        try {
+            customers = generateCustomers(file, parlour);
+        }
+
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         parlour.run(customers);
     }
 
