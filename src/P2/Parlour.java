@@ -59,15 +59,20 @@ public class Parlour {
     }
 
 
-    // Return true if a Customer was successfully seated
+    // Return true if a Customer can successfully be seated
     public boolean seatCustomer() {
         if(!isFull) {
+            numberofCustomers++;
+
+            if(numberofCustomers == numberOfSeats){
+                isFull = true;
+            }
             return true;
         }
 
-        else{
+        else {
             return false;
-            }
+        }
     }
 
     // Return true if Customer is finished eating their ice cream

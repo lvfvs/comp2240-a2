@@ -1,13 +1,13 @@
 package P2;
 
 public class Customer implements Runnable {
-    private String id; // implement as C + id
-    private int arrivalTime;
-    private int iceCreamEatingTime;
+    private final String id; // implement as C + id
+    private final int arrivalTime;
+    private final int iceCreamEatingTime;
     private int leavingTime;
     private boolean isSeated;
     private int timeSeated;
-    private Parlour parlour;
+    private final Parlour parlour;
 
     public Customer(String id, int arrivalTime, int iceCreamEatingTime, Parlour parlour) {
         this.id = "";
