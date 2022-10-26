@@ -11,11 +11,11 @@
 package P1;
 
 public class Farmer implements Runnable {
-    private String id;
-    private int steps; // A count of how many steps the farmer has taken
-    private String home;
+    private final String id;
+    private final String home;
+    private final Bridge bridge;
     private String destination;
-    private Bridge bridge;
+    private int steps;
 
     public Farmer(String id, String home, Bridge bridge) {
         this.id = id;

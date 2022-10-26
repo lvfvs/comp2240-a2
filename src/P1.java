@@ -8,13 +8,14 @@
  *
  */
 
-package P1;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import java.io.File;
+
+import P1.Bridge;
+import P1.Farmer;
 
 public class P1 {
     public static void main(String[] args) {
@@ -66,11 +67,11 @@ public class P1 {
         ArrayList<Farmer> farmers = new ArrayList<>();
 
         for(int i = 0; i < north; i++) {
-            farmers.add(new Farmer("N_Farmer", "North", bridge));
+            farmers.add(new Farmer("N_Farmer" + (i + 1), "North", bridge));
         }
 
         for(int i = 0; i < south; i++) {
-            farmers.add(new Farmer("S_Farmer", "South", bridge));
+            farmers.add(new Farmer("S_Farmer" + (i + 1), "South", bridge));
         }
 
         return farmers;
