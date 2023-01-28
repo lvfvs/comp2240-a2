@@ -5,7 +5,7 @@
  *  Course: COMP2240, Operating Systems
  *  Author: Olivia Favos
  *  Student Number: c3188124
- *  Description: 
+ *  Description: Takes input from the command line and generates threads.
  */
 
 import java.io.FileNotFoundException;
